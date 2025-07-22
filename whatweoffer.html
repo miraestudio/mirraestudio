@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirae Studio - What We Offer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        
+        body {
+            background-color: #fffafc;
+            color: #333;
+        }
+        
+        .navbar {
+            background-color: #fff0f5;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .brand {
+            text-align: center;
+        }
+        
+        .brand h1 {
+            font-family: 'Cursive', sans-serif;
+            font-size: 2rem;
+            color: #000;
+            margin-bottom: 0.25rem;
+        }
+        
+        .brand p {
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            color: #666;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: #000;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #d81b60;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            border: 1px solid #000;
+            border-radius: 20px;
+            padding: 0.5rem 1.5rem;
+            font-size: 0.9rem;
+            text-decoration: none;
+            color: #000;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-button:hover {
+            background: #fce4ec;
+        }
+        
+        /* What We Offer Section */
+        .offer-section {
+            padding: 5rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            text-align: center;
+            position: relative;
+        }
+        
+        .offer-header {
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .offer-header h2 {
+            font-size: 2.5rem;
+            font-family: 'Cursive', sans-serif;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+        
+        .offer-header h2 span {
+            color: #d81b60;
+        }
+        
+        .offer-header p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            color: #555;
+        }
+        
+        .offer-features {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            max-width: 350px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #d81b60;
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+        
+        .feature-card p {
+            color: #666;
+            font-size: 1rem;
+        }
+        
+        /* Decorative Elements */
+        .decorative-circle {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background-color: rgba(216, 27, 96, 0.05);
+            z-index: -1;
+        }
+        
+        .circle-1 {
+            top: -50px;
+            left: -50px;
+        }
+        
+        .circle-2 {
+            bottom: -50px;
+            right: -50px;
+        }
+        
+        /* Brand Watermark */
+        .brand-watermark {
+            position: absolute;
+            bottom: 2rem;
+            right: 2rem;
+            font-family: 'Cursive', sans-serif;
+            color: rgba(0,0,0,0.1);
+            font-size: 1.5rem;
+            text-align: right;
+            line-height: 1.2;
+            pointer-events: none;
+            user-select: none;
+        }
+        
+        .brand-watermark span {
+            display: block;
+            font-size: 0.8rem;
+            color: rgba(0,0,0,0.1);
+        }
+        
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .navbar-container {
+                flex-direction: column;
+            }
+            
+            .brand {
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 1rem;
+            }
+            
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                width: 100%;
+                text-align: center;
+                gap: 1rem;
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .menu-toggle {
+                display: block;
+            }
+            
+            .offer-header h2 {
+                font-size: 2rem;
+            }
+            
+            .brand-watermark {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="brand">
+                <h1>Mirae Studio</h1>
+                <p>EST. 2025</p>
+            </div>
+            
+            <div class="menu-toggle">☰</div>
+            
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="whoarewe.html">Who Are We?</a>
+                <a href="whatweoffer.html">What We Offer?</a>
+                <a href="contact.html">Contact Us</a>
+            </div>
+            
+            <a href="index.html" class="cta-button">See Our Jewelry</a>
+        </div>
+    </nav>
+
+    <section id="offer" class="offer-section">
+        <div class="decorative-circle circle-1"></div>
+        <div class="decorative-circle circle-2"></div>
+        
+        <div class="brand-watermark">
+            MineStudio<br>
+            <span>EST.2025</span>
+        </div>
+        
+        <div class="offer-header">
+            <h2>What we offer <span>?</span></h2>
+            <p>At Mirae Studio, we offer more than just jewelry — we offer pieces that tell a story.</p>
+        </div>
+
+        <div class="offer-features">
+            <div class="feature-card">
+                <div class="feature-icon">✦</div>
+                <h3>TIMELESS DESIGN</h3>
+                <p>We focus on clean lines, soft forms, and details that never go out of style — jewelry you'll want to wear every day, and keep forever.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">♥</div>
+                <h3>HANDCRAFTED QUALITY</h3>
+                <p>Each piece is meticulously crafted with attention to detail, using only the finest materials to ensure lasting beauty and comfort.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="feature-icon">✧</div>
+                <h3>MEANINGFUL JEWELRY</h3>
+                <p>Our collections are designed to celebrate life's special moments and become cherished heirlooms that carry your personal story.</p>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.querySelector('.menu-toggle').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+</html>

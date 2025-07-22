@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mirae Studio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      background: #fffafc;
+      color: #000;
+    }
+
+    header {
+      text-align: center;
+      padding: 4rem 1rem 2rem;
+    }
+
+    header h1 {
+      font-size: 3rem;
+      font-family: 'Cursive';
+      color: #000;
+      position: relative;
+    }
+
+    header h1::before {
+      content: 'MS';
+      position: absolute;
+      font-size: 6rem;
+      color: #f9d9e4;
+      top: -2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: -1;
+    }
+
+    header p {
+      margin-top: 1rem;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .cta-button {
+      margin-top: 2rem;
+      display: inline-block;
+      border: 2px solid #000;
+      border-radius: 25px;
+      padding: 0.75rem 2rem;
+      font-weight: bold;
+      text-decoration: none;
+      color: #000;
+      transition: all 0.3s ease;
+    }
+
+    .cta-button:hover {
+      background: #fce4ec;
+    }
+
+    .products {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      padding: 3rem 1rem;
+      max-width: 1400px;
+      margin: auto;
+    }
+
+    .product-card {
+      background: #fff;
+      border: 1px solid #eee;
+      padding: 1rem;
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+      width: 100%;
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s ease;
+      cursor: zoom-in;
+    }
+
+    .product-card img:hover {
+      transform: scale(1.05);
+    }
+
+    .product-card h3 {
+      margin: 1rem 0 0.5rem;
+    }
+
+    .fav-btn {
+      background: none;
+      border: 1px solid #000;
+      padding: 0.4rem 0.8rem;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .fav-btn:hover {
+      background: #fce4ec;
+    }
+
+    #favorites-list {
+      padding: 2rem;
+      background: #fef0f5;
+    }
+
+    #favorites-list h2 {
+      text-align: center;
+      margin-bottom: 1rem;
+    }
+
+    #favorites {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .favorite-item {
+      background: #fff;
+      padding: 1rem;
+      border-radius: 10px;
+      border: 1px solid #ddd;
+      min-width: 150px;
+      text-align: center;
+    }
+
+    .remove-btn {
+      margin-top: 0.5rem;
+      background: #ffcccc;
+      border: none;
+      border-radius: 10px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.8rem;
+      cursor: pointer;
+      color: #900;
+    }
+
+    .remove-btn:hover {
+      background: #ffb3b3;
+    }
+
+    .navbar {
+      background-color: #fff0f5;
+      padding: 1rem 2rem;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .navbar ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .navbar ul li a {
+      text-decoration: none;
+      color: #000;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    .navbar ul li a:hover {
+      color: #d81b60;
+    }
+
+    @media (max-width: 1024px) {
+      .products {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .products {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Modal Styles */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0,0,0,0.9);
+    }
+
+    .modal-content {
+      display: block;
+      max-width: 90%;
+      max-height: 90%;
+      margin: 5% auto;
+      border-radius: 10px;
+    }
+
+    .close {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      color: white;
+      font-size: 40px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover {
+      color: #ffdddd;
+    }
+
+
+    .checkmark {
+  display: inline-block;
+  margin-left: 8px;
+  color: #28a745;
+  font-weight: bold;
+  font-size: 1.2rem;
+  animation: popFade 1.5s ease;
+}
+
+@keyframes popFade {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  30% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+}
+
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Mirae Studio</h1>
+    <p>EST. 2025</p>
+    <a href="#products" class="cta-button">See Our Jewelry</a>
+  </header>
+
+  <nav class="navbar">
+    <ul>
+      <li><a href="#">Home</a></li>
+      <li><a href="whoarewe.html">Who Are We?</a></li>
+      <li><a href="whatweoffer.html">What We Offer?</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <section id="products" class="products">
+    <div class="product-card" data-id="ring1">
+      <img src="temmos.png" alt="Tennis Bracelet" onclick="openModal(this)">
+      <h3>Silver Tennis Bracelet</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    
+    <div class="product-card" data-id="ring2">
+      <img src="seeseat.png" alt="Twist Ring"  onclick="openModal(this)">
+      <h3>Sea Set</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+
+    <div class="product-card" data-id="bracelet1">
+      <img src="rings2.png" alt="Bracelet" onclick="openModal(this)">
+      <h3>Warmth Set</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+
+    </div>
+       <div class="product-card" data-id="bracelet11">
+      <img src="lule.png" alt="Bracelet1" onclick="openModal(this)">
+      <h3>Dreamy Bloomers</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+
+    </div> <div class="product-card" data-id="bracelet12">
+      <img src="dora.png" alt="Bracelet12" onclick="openModal(this)">
+      <h3>Gold Collection</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     </div> <div class="product-card" data-id="bracelet123">
+      <img src="blue.png" alt="Bracelet123" onclick="openModal(this)">
+      <h3>Lily Earrings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+      </div> <div class="product-card" data-id="bracelet1234">
+      <img src="gjelbert.png" alt="Bracelet1234" onclick="openModal(this)">
+      <h3>Green Gold Blooms</h3>
+    <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet12345">
+      <img src="jj.png" alt="Bracelet12345" onclick="openModal(this)">
+      <h3>Pink Duo</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+
+    </div>
+
+    </div> <div class="product-card" data-id="bracelet123456">
+      <img src="white.png" alt="Bracelet123456" onclick="openModal(this)">
+      <h3>Moonlight Petals</h3>
+    <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet1234567">
+      <img src="unaza.png" alt="Bracelet1234567" onclick="openModal(this)">
+      <h3>Desert Bloom Rings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet1111">
+      <img src="sdi.png" alt="Bracelet1111" onclick="openModal(this)">
+      <h3>Eclipse Cuff</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet1222">
+      <img src="eh.png" alt="Bracelet1222" onclick="openModal(this)">
+      <h3>Everyday Gold Rings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet1333">
+      <img src="sc1.png" alt="Bracelet1333" onclick="openModal(this)">
+      <h3>Moon Drop Earrings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     <div class="product-card" data-id="bracelet1444">
+      <img src="nukedi.png" alt="Bracelet1444" onclick="openModal(this)">
+      <h3>Cloud Drop Earrings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     <div class="product-card" data-id="bracelet15555">
+      <img src="lula.png" alt="Bracelet15555" onclick="openModal(this)">
+      <h3>Sun-Kissed Petals</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+    
+     <div class="product-card" data-id="bracelet16666">
+      <img src="lektyr.png" alt="Bracelet16666" onclick="openModal(this)">
+      <h3>Golden Lily Earrings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     <div class="product-card" data-id="bracelet17777">
+      <img src="kurdele.png" alt="Bracelet17777"  onclick="openModal(this)">
+      <h3>Ribbon Bows Earrings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+      <div class="product-card" data-id="bracelet18888">
+      <img src="phaj.png" alt="Bracelet18888" onclick="openModal(this)">
+      <h3>Ocean Sparkle Stars</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet19999">
+      <img src="zemra.png" alt="Bracelet19999" onclick="openModal(this)">
+      <h3>Love Loop Earrings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     <div class="product-card" data-id="bracelet10000">
+      <img src="je.png" alt="Bracelet10000" onclick="openModal(this)">
+      <h3>Love Knot Duo</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     <div class="product-card" data-id="bracelet18">
+      <img src="voth.png" alt="Bracelet18" onclick="openModal(this)">
+      <h3>Golden Cuties</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     <div class="product-card" data-id="bracelet19">
+      <img src="dy.png" alt="Bracelet19" onclick="openModal(this)">
+      <h3>Twist Drops Earrings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet17">
+      <img src="hallhalle.png" alt="Bracelet17" onclick="openModal(this)">
+      <h3>Gold Tennis Bracelet</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet16">
+      <img src="vij.png" alt="Bracelet16" onclick="openModal(this)">
+      <h3>Infinite Gold</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     <div class="product-card" data-id="bracelet15">
+      <img src="medit.png" alt="Bracelet15"  onclick="openModal(this)">
+      <h3>Sunburst Flower Ring</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+      <div class="product-card" data-id="bracelet14">
+      <img src="ploy.png" alt="Bracelet14"  onclick="openModal(this)">
+      <h3>Oval Link Chain</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+     <div class="product-card" data-id="bracelet13">
+      <img src="tri.png" alt="Bracelet13"  onclick="openModal(this)">
+      <h3>Color Pop Gold</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet12">
+      <img src="syn.png" alt="Bracelet12"  onclick="openModal(this)">
+      <h3>Golden Eye Ring</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet127">
+      <img src="ayni.png" alt="Bracelet127"  onclick="openModal(this)">
+      <h3>Lucky Eye Ring</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+    
+    <div class="product-card" data-id="bracelet128">
+      <img src="rruza.png" alt="Bracelet128"  onclick="openModal(this)">
+      <h3>Bubble Line Ring</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet129">
+      <img src="power.png" alt="Bracelet129"  onclick="openModal(this)">
+      <h3>Candy Gem Rings</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+    <div class="product-card" data-id="bracelet199">
+      <img src="paint.png" alt="Bracelet199"  onclick="openModal(this)">
+      <h3>Modern Gold Trio</h3>
+      <button class="fav-btn" onclick="addToFavorites(this)">❤️ Add to Favorites</button>
+    </div>
+
+
+  </section>
+
+  <section id="favorites-list">
+    <h2>❤️ Your Favorite Products</h2>
+    <div id="favorites"></div>
+  </section>
+
+  <!-- Modal for zoom -->
+  <div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+  </div>
+
+  
+
+  <script>
+    function addToFavorites(button) {
+  const card = button.closest('.product-card');
+  const id = card.getAttribute('data-id');
+  const name = card.querySelector('h3').innerText;
+
+  let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+  const index = favorites.findIndex(item => item.id === id);
+
+  if (index === -1) {
+    favorites.push({ id, name });
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    renderFavorites();
+
+    // Show checkmark animation
+    const check = document.createElement("span");
+    check.className = "checkmark";
+    check.textContent = "✔";
+    button.appendChild(check);
+
+    setTimeout(() => {
+      check.remove();
+    }, 1500); // remove after 1.5 sec
+  }
+}
+
+
+    function removeFromFavorites(id) {
+      let favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      favorites = favorites.filter(item => item.id !== id);
+      localStorage.setItem("favorites", JSON.stringify(favorites));
+      renderFavorites();
+    }
+
+    function renderFavorites() {
+      const favorites = JSON.parse(localStorage.getItem("favorites")) || [];
+      const container = document.getElementById("favorites");
+      container.innerHTML = "";
+      favorites.forEach(item => {
+        const div = document.createElement("div");
+        div.className = "favorite-item";
+        div.innerHTML = `
+          <div>${item.name}</div>
+          <button class="remove-btn" onclick="removeFromFavorites('${item.id}')">Remove</button>
+        `;
+        container.appendChild(div);
+      });
+    }
+
+    window.onload = renderFavorites;
+
+    // Modal logic
+    function openModal(img) {
+      const modal = document.getElementById("imageModal");
+      const modalImg = document.getElementById("modalImage");
+      modal.style.display = "block";
+      modalImg.src = img.src;
+    }
+
+    function closeModal() {
+      document.getElementById("imageModal").style.display = "none";
+    }
+
+    window.onclick = function(event) {
+      const modal = document.getElementById("imageModal");
+      if (event.target === modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
+</body>
+</html>

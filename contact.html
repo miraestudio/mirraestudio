@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact Us - Mirae Studio</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(to bottom right, #ffe3ec, #fff5f9);
+      color: #333;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    nav {
+      background: rgba(255, 240, 245, 0.7);
+      backdrop-filter: blur(6px);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+      padding: 18px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .logo span {
+      font-weight: bold;
+      font-size: 20px;
+      color: #cc3366;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 10px;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      color: #111;
+      font-weight: bold;
+      font-size: 18px;
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.3s ease;
+    }
+
+    nav ul li a::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background-color: #ff6699;
+      transition: width 0.3s ease;
+    }
+
+    nav ul li a:hover {
+      color: #ff6699;
+    }
+
+    nav ul li a:hover::after {
+      width: 100%;
+    }
+
+    /* Contact Section */
+    .contact-container {
+      max-width: 1200px;
+      margin: 60px auto;
+      padding: 40px;
+      background-color: #fff0f6;
+      border-radius: 24px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 40px;
+      animation: fadeIn 0.8s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .contact-info h1 {
+      font-size: 48px;
+      font-family: 'Brush Script MT', cursive;
+      margin-bottom: 30px;
+      color: #cc3366;
+    }
+
+    .contact-info p {
+      font-size: 18px;
+      margin: 18px 0;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      transition: transform 0.3s;
+    }
+
+    .contact-info p:hover {
+      transform: translateX(6px);
+    }
+
+    .contact-info a {
+      color: #333;
+      text-decoration: none;
+    }
+
+    .contact-info a:hover {
+      color: #ff6699;
+      text-decoration: underline;
+    }
+
+    .contact-info img.icon {
+      width: 24px;
+      height: 24px;
+    }
+
+    .contact-image {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-width: 250px;
+    }
+
+    .contact-image img {
+      max-width: 300px;
+      width: 100%;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+
+    /* Order Section */
+    .order-box {
+      max-width: 700px;
+      margin: 60px auto;
+      padding: 40px 30px;
+      background-color: #fff0f6;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    .order-box h2 {
+      font-size: 32px;
+      color: #cc3366;
+      margin-bottom: 15px;
+    }
+
+    .order-box p {
+      font-size: 18px;
+      margin-bottom: 25px;
+      color: #444;
+    }
+
+    .order-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #ff6699;
+      color: white;
+      padding: 14px 26px;
+      border-radius: 30px;
+      font-size: 16px;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      box-shadow: 0 4px 10px rgba(255, 102, 153, 0.3);
+    }
+
+    .order-btn:hover {
+      background-color: #e05588;
+      transform: scale(1.03);
+    }
+
+    .insta-icon {
+      width: 22px;
+      height: 22px;
+      vertical-align: middle;
+    }
+
+    /* Thank You Popup */
+    .thank-you {
+      display: none;
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: #cc3366;
+      color: #fff;
+      padding: 18px 24px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      animation: slideUp 0.5s ease forwards;
+      z-index: 999;
+      font-size: 16px;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(40px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 30px;
+      font-size: 15px;
+      color: #777;
+      background-color: #fff5f9;
+      margin-top: 60px;
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      nav ul {
+        justify-content: flex-start;
+        margin-top: 10px;
+        padding-left: 10px;
+      }
+
+      .contact-container {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .contact-info h1 {
+        font-size: 40px;
+      }
+
+      .order-box h2 {
+        font-size: 28px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo">
+      <img src="llogodyshi.png" alt="Mirae Logo" />
+      <span>Mirae Studio</span>
+    </div>
+    <ul>
+      <li><a href="index.html">Home</a></li>
+      <li><a href="whoarewe.html">Who Are We?</a></li>
+      <li><a href="whatweoffer.html">What We Offer?</a></li>
+      <li><a href="contact.html">Contact Us</a></li>
+    </ul>
+  </nav>
+
+  <!-- Contact Section -->
+  <div class="contact-container">
+    <div class="contact-info">
+      <h1>Stay Connected :</h1>
+      <p>
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/174/174855.png" alt="Instagram icon" />
+        <a href="https://www.instagram.com/miiraestudio/?igsh=MTVoYzFqaTIzaWpkMw%3D%3D&utm_source=qr#" target="_blank">@miiraestudio</a>
+      </p>
+      <p>
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/455/455705.png" alt="Phone icon" />
+        +383 49 737 773
+      </p>
+      <p>
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/732/732200.png" alt="Email icon" />
+        <a href="mailto:miraestudio0@gmail.com">miraestudio0@gmail.com</a>
+      </p>
+      <p>
+        <img class="icon" src="https://cdn-icons-png.flaticon.com/512/3046/3046121.png" alt="TikTok icon" />
+        <a href="https://www.tiktok.com/@miiraestudio?_t=ZM-8xZ8CBL3Mqz&_r=1" target="_blank">@miiraestudio</a>
+      </p>
+    </div>
+
+    <div class="contact-image">
+      <img src="https://cdn-icons-png.flaticon.com/512/1077/1077035.png" alt="Heart envelope" />
+    </div>
+  </div>
+
+  <!-- Order Section -->
+  <div class="order-box">
+    <h2>Here You Can Order 💌</h2>
+    <p>If you'd like to place an order, feel free to message us directly on Instagram.</p>
+    <a href="https://www.instagram.com/miiraestudio?igsh=MTVoYzFqaTIzaWpkMw%3D%3D&utm_source=qr
+" target="_blank" class="order-btn" onclick="showThankYou()">
+      💖 Order via Instagram
+      <img src="https://cdn-icons-png.flaticon.com/512/2111/2111463.png" alt="Instagram" class="insta-icon" />
+    </a>
+  </div>
+
+  <!-- Thank You Popup -->
+  <div class="thank-you" id="thankYouBox">Thank you! We'll be happy to receive your order. 💕</div>
+
+  <!-- Footer -->
+  <footer>
+    &copy; 2025 Mirae Studio. All rights reserved.
+  </footer>
+
+  <!-- JavaScript for popup -->
+  <script>
+    function showThankYou() {
+      const box = document.getElementById("thankYouBox");
+      box.style.display = "block";
+      setTimeout(() => {
+        box.style.display = "none";
+      }, 4000);
+    }
+  </script>
+</body>
+</html>
